@@ -1,14 +1,14 @@
 # To Capture Frame
 import cv2
-import tensorflow as tf
+import tenserflow as tf
 
 # To process image array
 import numpy as np
 
 
 # import the tensorflow modules and load the model
-mymodel = tf.keras.models.load_model("keras_model.h5")
 
+mymodel = tf.keras.load_model("keras_model.h5")
 
 # Attaching Cam indexed as 0, with the application software
 camera = cv2.VideoCapture(0)
@@ -31,19 +31,16 @@ while True:
 		resized_frame = cv2.resize(frame,(224,224))
 		# expand the dimensions
 		resized_frame = np.expand_dims(resized_frame,axis = 0)
-                
 		# normalize it before feeding to the model
-		resized_frame = resized_frame/255
-		
+		resized_frame = resized_frame/225
 		# get predictions from the model
 		prediction = mymodel.predict(resized_frame)
-
-                rock = int(predictions[0][0]*100)
-                paper = int(predictions[0][1]*100)
-                scissors = int(predictions[][2]*100)
-
-                print(f "Rock: {roc} %, Paper: {paper} %, Scissors: {scissors} %")
-                
+		rock = int(predictions[0][0]*100)
+		paper = int(predictions[0][1]*100)
+		scissor = int(predictions[0][2]*100)
+		print(f"Rock:{rock}%,Paper:{paper}%,Scissor:{scissor}%")
+		
+		
 		# displaying the frames captured
 		cv2.imshow('feed' , frame)
 
